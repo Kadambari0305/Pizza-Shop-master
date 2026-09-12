@@ -19,6 +19,9 @@ mongoose
 
 const app = express();
 
+app.use(express.json());
+app.use(bodyParser.json());
+
 app.use("/api/users", userRoute);
 app.get("/api/products", (req, res) => {
   res.send(data.products);
@@ -28,10 +31,11 @@ app.get("/api/products/:id", (req, res) => {
   const productId = req.params.id;
   const product = data.products.find((x) => x._id === productId);
 
-  if (product) res.send(product);
-  else res.send(404).send({ msg: "Product Not Found." });
-
-  res.send(data.products);
+  if (product) {
+    return res.send(product);
+  } else {
+    return res.status(404).send({ msg: "Product Not Found." });
+  }
 });
 
 app.use(express.static(path.join(__dirname, "/../frontend/build")));
