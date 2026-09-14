@@ -2,6 +2,7 @@ services:
   - type: web
     name: pizza-shop
     env: node
+    plan: free
     buildCommand: npm install --legacy-peer-deps && npm run build
     startCommand: npm start
     envVars:
